@@ -8,6 +8,7 @@ class ArtistsController < ApplicationController
     @artist = ArtistGroup.find(params[:id])
     sort = params[:sort] || 'Name asc'
     @torrent_groups = @artist.torrent_groups(sort)
+    @similar = @artist.similar
   end
 
   def random
