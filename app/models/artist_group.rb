@@ -14,7 +14,14 @@ class ArtistGroup < ActiveRecord::Base
   end
 
   def similar
-    ActiveRecord::Base.connection.execute("select sa.Name, s.SimilarID from artists_group a join artists_similar s on s.ArtistID = a.ArtistID join artists_group sa on sa.ArtistID = s.SimilarID  where a.ArtistID = #{self.ArtistID}").to_a
+    query = ActiveRecord::Base.connection.raw_connection.prepare("
+            select ar2.artistid, ars.score, ag.name
+            from artists_similar ar
+            join artists_similar_scores ars on ars.SimilarID=ar.SimilarID
+            join artists_similar ar2 on (ar.SimilarID=ar2.SimilarID and ar2.artistid!=ar.artistid)
+            join artists_group ag on ag.artistid=ar2.artistid
+            where ar.artistid=?")
+    query.execute(self.ArtistID).to_a
   end
 
   def self.random

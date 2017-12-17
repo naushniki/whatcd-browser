@@ -50,6 +50,19 @@
 <% end %>
 </table>
 
+<table>
+  <tr>
+    <th><%= sortable_header('Name') %></th>
+    <th><%= sortable_header('Score') %></th>
+  </tr>
+<% @similar.each do |sim| %>
+  <tr>
+    <td><%= sim[2] %></td>
+    <td><%= sim[1] %></td>
+  </tr>
+<% end %>
+</table>
+
 <% content_for :javascript do %>
 <script>
   function truncateString(str, length) {
