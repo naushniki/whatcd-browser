@@ -50,18 +50,7 @@
 <% end %>
 </table>
 
-<table>
-  <tr>
-    <th><%= sortable_header('Name') %></th>
-    <th><%= sortable_header('Score') %></th>
-  </tr>
-<% @similar.each do |sim| %>
-  <tr>
-    <td><%= sim[2] %></td>
-    <td><%= sim[1] %></td>
-  </tr>
-<% end %>
-</table>
+<%= render partial: "similargraph", locals: {similar: @similar, name: @artist.Name} %>
 
 <% content_for :javascript do %>
 <script>

@@ -21,7 +21,15 @@ class ArtistGroup < ActiveRecord::Base
             join artists_similar ar2 on (ar.SimilarID=ar2.SimilarID and ar2.artistid!=ar.artistid)
             join artists_group ag on ag.artistid=ar2.artistid
             where ar.artistid=?")
-    query.execute(self.ArtistID).to_a
+    array = query.execute(self.ArtistID).to_a
+    result = Array.new
+    array.each do |entry|
+      node = Hash.new
+      node["id"] = entry[0]
+      node["label"] = entry[2]
+      result.push(node)
+    end
+    return result
   end
 
   def self.random

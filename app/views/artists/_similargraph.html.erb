@@ -1,0 +1,35 @@
+<center><div id="similargraph-<%= @artist.id.to_s %>" class="similaritygraphonartistpage"></div></center>
+<script src="/assets/vis.js"></script>
+<link href="/assets/vis.css" rel="stylesheet" type="text/css" />
+
+
+  <style type="text/css">
+    .similaritygraphonartistpage {
+      width: 600px;
+      height: 400px;
+      border: 1px solid lightgray;
+    }
+  </style>
+<script>
+  var nodesArray = <%= @similar.to_json.html_safe %>;
+  nodesArray.push({id: <%= @artist.id %>, label: "<%= @artist.Name %>"})
+  var edgesArray = []
+  <% for @node in @similar %>
+  edgesArray.push({from: <%= @artist.id %>, to: <%= @node["id"] %>})
+  <% end %>
+
+  var edges = new vis.DataSet(edgesArray);
+  var nodes = new vis.DataSet(nodesArray);
+  var container = document.getElementById('similargraph-<%= @artist.id.to_s %>');
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+  network.on("selectNode", function (params) {
+        if (params.nodes.length === 1) {
+            var node = nodes.get(params.nodes[0]);
+            window.open('/artists/'+node.id, '_blank');
+        }});
+</script>
