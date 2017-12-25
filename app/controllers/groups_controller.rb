@@ -11,9 +11,9 @@ class GroupsController < ApplicationController
           query = query.chop
         end
       end
-      @groups = TorrentGroup.where("Name is not null").paginate(page: params[:page], per_page: 30)
+      @groups = TorrentGroup.where(query).paginate(page: params[:page], per_page: 30)
     else
-      @groups = TorrentGroup.order(sort).paginate(page: params[:page], per_page: 30)
+      @groups = TorrentGroup.where("Name is not null").order(sort).paginate(page: params[:page], per_page: 30)
     end
   end
 
