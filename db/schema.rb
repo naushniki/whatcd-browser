@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171225000100) do
+ActiveRecord::Schema.define(version: 20171225000200) do
 
   create_table "artists_alias", primary_key: "AliasID", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer "ArtistID", null: false
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20171225000100) do
     t.datetime "updated", null: false
     t.index ["CategoryID"], name: "CategoryID"
     t.index ["Name"], name: "Name", unique: true
+    t.index ["Name"], name: "collages_name_index", type: :fulltext
+    t.index ["TagList"], name: "collages_TagList_index", type: :fulltext
   end
 
   create_table "collages_torrents", primary_key: ["CollageID", "GroupID"], force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
