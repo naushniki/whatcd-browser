@@ -29,7 +29,7 @@
       <td><%= group.RecordLabel %></td>
       <td><%= group.release_type_name %></td>
       <td><%= group.TagList %></td>
-      <td><%= time_ago_in_words(group.Time) %></td>
+      <td><%= if group.Time!=nil then time_ago_in_words(group.Time) else "N/A" end %></td>
     </tr>
   <% end %>
 </table>

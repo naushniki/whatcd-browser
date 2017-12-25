@@ -1,7 +1,12 @@
 class ArtistsController < ApplicationController
   def index
-    query = "MATCH (Name) AGAINST (\"#{params[:search]}\")"
-    @artists = ArtistGroup.where(query).paginate(page: params[:page], per_page: 30)
+    sort = params[:sort] || 'Name asc'
+    if params[:search].to_s!=""
+      query = "MATCH (Name) AGAINST (\"#{params[:search]}\")"
+      @artists = ArtistGroup.where(query).paginate(page: params[:page], per_page: 30)
+    else
+      @artists = ArtistGroup.order(sort).paginate(page: params[:page], per_page: 30)
+    end    
   end
 
   def show
