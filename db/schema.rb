@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20171225000100) do
 
   create_table "artists_alias", primary_key: "AliasID", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer "ArtistID", null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 0) do
   create_table "artists_group", primary_key: "ArtistID", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "Name", limit: 200, collation: "utf8_swedish_ci"
     t.index ["Name"], name: "Name"
+    t.index ["Name"], name: "artists_group_name_index", type: :fulltext
   end
 
   create_table "artists_similar", primary_key: ["ArtistID", "SimilarID"], force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
@@ -118,6 +119,9 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["ArtistID"], name: "ArtistID"
     t.index ["CategoryID"], name: "CategoryID"
     t.index ["Name"], name: "Name", length: { Name: 255 }
+    t.index ["Name"], name: "torrents_group_name_index", type: :fulltext
+    t.index ["RecordLabel"], name: "torrents_group_recordlabel_index", type: :fulltext
+    t.index ["TagList"], name: "torrents_group_TagList_index", type: :fulltext
     t.index ["Time"], name: "Time"
     t.index ["Year"], name: "Year"
   end

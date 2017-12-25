@@ -1,7 +1,7 @@
 class ArtistsController < ApplicationController
   def index
-    sort = params[:sort] || 'Name asc'
-    @artists = ArtistGroup.where("Name like ?", "%#{params[:search]}%").order(sort).paginate(page: params[:page], per_page: 30)
+    query = "MATCH (Name) AGAINST (\"#{params[:search]}\")"
+    @artists = ArtistGroup.where(query).paginate(page: params[:page], per_page: 30)
   end
 
   def show

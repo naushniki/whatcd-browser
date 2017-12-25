@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   def index
     query = String.new
-    query += if params[:search]=="" then '' else "MATCH (Name) AGAINST (\"#{params[:search]}\" IN BOOLEAN MODE) and " end
+    query += if params[:search]=="" then '' else "MATCH (Name) AGAINST (\"#{params[:search]}\") and " end
     query += if params[:label]=="" then '' else "MATCH (recordlabel) AGAINST (\"#{params[:label]}\" IN BOOLEAN MODE) and " end
     query += if params[:tag]=="" then '' else "MATCH (taglist) AGAINST (\"#{params[:tag]}\" IN BOOLEAN MODE)" end
     if query.end_with?(" and ")
