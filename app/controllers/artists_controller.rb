@@ -13,7 +13,7 @@ class ArtistsController < ApplicationController
     @artist = ArtistGroup.find(params[:id])
     sort = params[:sort] || 'Name asc'
     @torrent_groups = @artist.torrent_groups(sort)
-    @similar = @artist.similar
+    @similarity_nodes, @similarity_edges = @artist.construct_similarity_graph_for_given_level_of_separation(2)
   end
 
   def random

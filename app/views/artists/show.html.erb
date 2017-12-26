@@ -50,7 +50,7 @@
 <% end %>
 </table>
 
-<%= render partial: "similargraph", locals: {similar: @similar, name: @artist.Name} %>
+<%= render partial: "similargraph", locals: {nodes: @similarity_nodes, edges: @similarity_edges} %>
 
 <% content_for :javascript do %>
 <script>
